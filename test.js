@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const mediaUrls = {
   image:
     "https://www.standardbank.co.za/file_source/SBG/Assets/Img/SA/Newsroom/SB_UniHack_600_x_300.jpg",
-  pdf: "https://drive.google.com/file/d/1NhK0BN7MKJg3HUWQ7mY9_1hh_rEBqMap/view?usp=drive_link", // Replace with your image URL
+  pdf: "https://github.com/Andile-coder/EduElevators/blob/main/andile_masela_qualification.pdf", // Replace with your image URL
 };
 
 app.get("/", (req, res) => {
@@ -99,6 +99,7 @@ app.post("/", (req, res) => {
 
   if (mediaUrl) {
     messageOptions.mediaUrl = mediaUrl;
+    console.log("Media URL:", mediaUrl);
   }
   client.messages
     .create(messageOptions)
