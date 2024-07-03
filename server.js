@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const mediaUrls = {
   image:
     "https://www.standardbank.co.za/file_source/SBG/Assets/Img/SA/Newsroom/SB_UniHack_600_x_300.jpg",
-  pdf: "https://github.com/Andile-coder/EduElevators/blob/main/andile_masela_qualification.pdf", // Replace with your image URL
+  pdf: "https://raw.githubusercontent.com/Andile-coder/EduElevators/main/Andile_Masela_resume%20(5).pdf", // Replace with your image URL
 };
 
 app.get("/", (req, res) => {
@@ -30,8 +30,9 @@ app.post("/", (req, res) => {
   let mediaUrl = null;
 
   const responses = {
-    goals:
-      "Our goals are to revolutionize education with AI by creating personalized learning paths. Our target market includes students, educators, and schools.",
+    login:
+      "Welcome!,Please enter your username and password to login to the platform.\nID Number:",
+    success: "Thanks for logging in! You can now access the platform",
     problem:
       "The current problem in education is the lack of personalized learning paths and inadequate performance tracking.",
     solution:
@@ -40,54 +41,62 @@ app.post("/", (req, res) => {
       "We proposed this solution to address the gaps in personalized education and to leverage AI for better learning outcomes.",
     funding:
       "Our funding approach involves seeking investments from educational grants, venture capital, and partnerships with educational institutions.",
-    list: "Please choose one of the following options:\n1. Show our goals and target market\n2. Read detailed problem description\n3. Read the solution we proposed\n4. Why we proposed this solution\n5. Read our funding approach idea\n6. Resend the list\n7. GitHub code\n8. Send image",
+    list: "Please choose one of the following options:\n1. Login.\n2 Start A learning session.\n3. Start Activities.\n4.View and practise past exam papers.\n5. Ask us a question.\n6. Course Curriculum \n7. View Progress/achievement.\n8. View Profile.\n9. View Settings.\n10. Log out.",
     github: "You can find our GitHub code at: https://github.com/your-repo",
     image: "Happy UniHack2024", // Placeholder for image response
   };
-  switch (incomingMessage) {
-    case "1":
-    case "show our goals our target market":
-      responseMessage = responses.goals;
-      break;
-    case "2":
-    case "read detailed problem description":
-      responseMessage = responses.problem;
-      break;
-    case "3":
-    case "read the solution we proposed":
-      responseMessage = responses.solution;
-      break;
-    case "4":
-    case "why we proposed this solution":
-      responseMessage = responses.reason;
-      break;
-    case "5":
-    case "read our funding approach idea":
-      responseMessage = responses.funding;
-      break;
-    case "6":
-    case "resend the list":
-      responseMessage = responses.list;
-      break;
-    case "7":
-    case "github code":
-      responseMessage = responses.github;
-      break;
-    case "8":
-    case "send image":
-      responseMessage = responses.image;
-      mediaUrl = mediaUrls.image;
-      break;
-    case "9":
-    case "send pdf":
-      responseMessage = responses.pdf;
-      mediaUrl = mediaUrls.pdf;
-      break;
-    default:
-      responseMessage =
-        "I'm sorry, I didn't understand that. Please choose a valid option from the list:\n" +
-        responses.list;
-      break;
+  if (!isNaN(incomingMessage) && incomingMessage.length > 6) {
+    responseMessage = `${responses.success} \n${responses.list}`;
+  } else {
+    switch (incomingMessage) {
+      case "1":
+      case "login":
+        responseMessage = responses.login;
+        break;
+      case "2":
+      case "read detailed problem description":
+        responseMessage = responses.problem;
+        break;
+      case "3":
+      case "read the solution we proposed":
+        responseMessage = responses.solution;
+        break;
+      case "4":
+      case "why we proposed this solution":
+        responseMessage = responses.reason;
+        break;
+      case "5":
+      case "read our funding approach idea":
+        responseMessage = responses.funding;
+        break;
+      case "6":
+      case "resend the list":
+        responseMessage = responses.list;
+        break;
+      case "7":
+      case "github code":
+        responseMessage = responses.github;
+        break;
+      case "8":
+      case "send image":
+        responseMessage = responses.image;
+        mediaUrl = mediaUrls.image;
+        break;
+      case "9":
+      case "see our pdf presentation":
+        responseMessage = responses.pdf;
+        mediaUrl = mediaUrls.pdf;
+        break;
+      case "123456789":
+        responseMessage = responses.success;
+        break;
+      // check if the incoming message is a number
+      default:
+        responseMessage =
+          "I'm sorry, I didn't understand that. Please choose a valid option from the list:\n" +
+          responses.list;
+        break;
+    }
   }
 
   // Send a response message back to the sender
