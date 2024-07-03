@@ -9,7 +9,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const mediaUrls = {
   image:
     "https://www.standardbank.co.za/file_source/SBG/Assets/Img/SA/Newsroom/SB_UniHack_600_x_300.jpg",
-  pdf: "https://raw.githubusercontent.com/Andile-coder/EduElevators/main/Andile_Masela_resume%20(5).pdf", // Replace with your image URL
+  pdf: "https://raw.githubusercontent.com/Andile-coder/EduElevators/main/Andile_Masela_resume%20(5).pdf",
+  // Replace with your image URL
+  math_p2:
+    "https://raw.githubusercontent.com/Andile-coder/EduElevators/73270a82f197fbaaed2fc804b7c56746aa1ca99c/Mathematics%20P2%20Nov%202023%20Eng.pdf",
+  physics_p2:
+    "https://raw.githubusercontent.com/Andile-coder/EduElevators/main/Physical%20Sciences%20P2%20May-June%202023%20Eng.pdf",
 };
 
 app.get("/", (req, res) => {
@@ -32,9 +37,11 @@ app.post("/", (req, res) => {
   const responses = {
     login:
       "Welcome!,Please enter your username and password to login to the platform.\nID Number:",
+    logout:
+      "Goodbye! You have successfully logged out of the platform. \nThank you for using EduElevators.",
     success: "Thanks for logging in! You can now access the platform",
-    problem:
-      "The current problem in education is the lack of personalized learning paths and inadequate performance tracking.",
+    past_exam_papers:
+      "This is a list of past exam papers that you can view and practise. \n221. Mathematics P2. \n231. Physical Sciences P2. \n243 Tourism",
     solution:
       "Our solution is an AI platform that integrates with existing school systems to provide personalized learning and detailed performance tracking.",
     reason:
@@ -44,13 +51,24 @@ app.post("/", (req, res) => {
     list: "Please choose one of the following options:\n1. Login.\n2 Start A learning session.\n3. Start Activities.\n4.View and practise past exam papers.\n5. Ask us a question.\n6. Course Curriculum \n7. View Progress/achievement.\n8. View Profile.\n9. View Settings.\n10. Log out.",
     github: "You can find our GitHub code at: https://github.com/your-repo",
     image: "Happy UniHack2024", // Placeholder for image response
+    exam_success: "You have successfully downloaded the exam paper",
   };
   if (!isNaN(incomingMessage) && incomingMessage.length > 6) {
     responseMessage = `${responses.success} \n${responses.list}`;
   } else {
     switch (incomingMessage) {
+      case "hi":
+      case "hello":
+      case "hello":
+        responseMessage = "Hello! How can I help you today?\n" + responses.list;
+
+        break;
       case "1":
       case "login":
+        responseMessage = responses.login;
+        break;
+      case "10":
+      case "logout":
         responseMessage = responses.login;
         break;
       case "2":
@@ -62,8 +80,8 @@ app.post("/", (req, res) => {
         responseMessage = responses.solution;
         break;
       case "4":
-      case "why we proposed this solution":
-        responseMessage = responses.reason;
+      case "past exam papers":
+        responseMessage = responses.past_exam_papers;
         break;
       case "5":
       case "read our funding approach idea":
@@ -89,6 +107,15 @@ app.post("/", (req, res) => {
         break;
       case "123456789":
         responseMessage = responses.success;
+        break;
+      case "221":
+        responseMessage = responses.exam_success;
+        mediaUrl = mediaUrls.math_p2;
+        break;
+      case "231":
+        responseMessage = responses.success;
+        responseMessage = responses.exam_success;
+        mediaUrl = mediaUrls.physics_p2;
         break;
       // check if the incoming message is a number
       default:
